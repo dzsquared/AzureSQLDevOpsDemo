@@ -41,14 +41,19 @@ jobs:
           done
           set -o pipefail -e
 
-      - name: create an empty DB
-        run: |
-          sqlcmd -S localhost -U sa -P P@ssw0rd -d master -Q "create database test123;"
-          sleep 10
+      # - name: create an empty DB
+      #   run: |
+      #     sqlcmd -S localhost -U sa -P P@ssw0rd -d master -Q "create database test123;"
+      #     sleep 10
 
-      - name: Avengers Assemble
-        run: |
-          sqlcmd -S localhost -U sa -P P@ssw0rd -d master -Q "EXEC sp_configure 'show advanced option', '1'; RECONFIGURE; EXEC sp_configure 'clr strict security', 0; RECONFIGURE; EXEC sp_configure 'clr enabled', 1; RECONFIGURE;"
+      # - name: Avengers Assemble
+      #   run: |
+      #     sqlcmd -S localhost -U sa -P P@ssw0rd -d master -Q "EXEC sp_configure 'show advanced option', '1'; RECONFIGURE; EXEC sp_configure 'clr strict security', 0; RECONFIGURE; EXEC sp_configure 'clr enabled', 1; RECONFIGURE;"
+
+      - uses: azure/sql-action@v2
+        with:
+          connection-string: "Server=localhost;Initial Catalog=master;User ID=sa;Password=P@ssw0rd;"  # the local connection string
+          path: './databasesetup.sql' # the sql script to create db and configure for clr
 
       # # deploy the sql project
       # - uses: azure/sql-action@v1.3
@@ -68,6 +73,11 @@ jobs:
       #     connection-string: "Server=localhost;Initial Catalog=test123;User ID=sa;Password=P@ssw0rd;"  # the local connection string
       #     project-file: './Tests/Tests.sqlproj' # the SQLproj file
 
-      - name: run the tests
-        run: |
-          sqlcmd -S localhost -U sa -P P@ssw0rd -d test123 -Q "EXEC tSQLt.Run 'testFinancialApp';"
+      # - name: run the tests
+      #   run: |
+      #     sqlcmd -S localhost -U sa -P P@ssw0rd -d test123 -Q "EXEC tSQLt.Run 'testFinancialApp';"
+
+      - uses: azure/sql-action@v2
+        with:
+          connection-string: "Server=localhost;Initial Catalog=test123;User ID=sa;Password=P@ssw0rd;"  # the local connection string
+          path: './runtests.sql' # the tsqlt test command
