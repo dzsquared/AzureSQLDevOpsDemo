@@ -59,7 +59,8 @@ jobs:
       - uses: azure/sql-action@v2
         with:
           connection-string: "Server=localhost;Initial Catalog=master;User ID=sa;Password=P@ssw0rd;"  # the local connection string
-          project-file: './Tests/Tests.sqlproj' # the SQLproj file
+          path: './Tests/Tests.sqlproj' # the SQLproj file
+          action: 'Publish'
           arguments: '/TargetDatabaseName:test123'
           # dacpac-package: './Tests/tsqlt/tSQLt.AzureSQL.dacpac'
 
