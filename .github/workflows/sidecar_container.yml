@@ -41,10 +41,10 @@ jobs:
           done
           set -o pipefail -e
 
-      - name: create an empty DB
-        run: |
-          sqlcmd -S localhost -U sa -P P@ssw0rd -d master -Q "create database test123;"
-          sleep 10
+      # - name: create an empty DB
+      #   run: |
+      #     sqlcmd -S localhost -U sa -P P@ssw0rd -d master -Q "create database test123;"
+      #     sleep 10
 
       - name: Avengers Assemble
         run: |
@@ -56,10 +56,11 @@ jobs:
       #     connection-string: "Server=localhost;Initial Catalog=test123;User ID=sa;Password=P@ssw0rd;"  # the local connection string
       #     project-file: './Code/Code.sqlproj' # the SQLproj file
 
-      - uses: azure/sql-action@v1.3
+      - uses: azure/sql-action@v2
         with:
-          connection-string: "Server=localhost;Initial Catalog=test123;User ID=sa;Password=P@ssw0rd;"  # the local connection string
+          connection-string: "Server=localhost;Initial Catalog=master;User ID=sa;Password=P@ssw0rd;"  # the local connection string
           project-file: './Tests/Tests.sqlproj' # the SQLproj file
+          arguments: '/TargetDatabaseName:test123'
           # dacpac-package: './Tests/tsqlt/tSQLt.AzureSQL.dacpac'
 
       # - uses: azure/sql-action@v1.3
