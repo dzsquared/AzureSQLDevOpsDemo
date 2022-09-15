@@ -50,22 +50,22 @@ jobs:
         run: |
           sqlcmd -S localhost -U sa -P P@ssw0rd -d master -Q "EXEC sp_configure 'show advanced option', '1'; RECONFIGURE; EXEC sp_configure 'clr strict security', 0; RECONFIGURE; EXEC sp_configure 'clr enabled', 1; RECONFIGURE;"
 
-      # deploy the sql project
-      - uses: azure/sql-action@v1.3
-        with:
-          connection-string: "Server=localhost;Initial Catalog=test123;User ID=sa;Password=P@ssw0rd;"  # the local connection string
-          project-file: './Code/Code.sqlproj' # the SQLproj file
+      # # deploy the sql project
+      # - uses: azure/sql-action@v1.3
+      #   with:
+      #     connection-string: "Server=localhost;Initial Catalog=test123;User ID=sa;Password=P@ssw0rd;"  # the local connection string
+      #     project-file: './Code/Code.sqlproj' # the SQLproj file
 
       - uses: azure/sql-action@v1.3
         with:
           connection-string: "Server=localhost;Initial Catalog=test123;User ID=sa;Password=P@ssw0rd;"  # the local connection string
           project-file: './Tests/Tests.sqlproj' # the SQLproj file
-          dacpac-package: './Tests/tsqlt/tSQLt.AzureSQL.dacpac'
+          # dacpac-package: './Tests/tsqlt/tSQLt.AzureSQL.dacpac'
 
-      - uses: azure/sql-action@v1.3
-        with:
-          connection-string: "Server=localhost;Initial Catalog=test123;User ID=sa;Password=P@ssw0rd;"  # the local connection string
-          project-file: './Tests/Tests.sqlproj' # the SQLproj file
+      # - uses: azure/sql-action@v1.3
+      #   with:
+      #     connection-string: "Server=localhost;Initial Catalog=test123;User ID=sa;Password=P@ssw0rd;"  # the local connection string
+      #     project-file: './Tests/Tests.sqlproj' # the SQLproj file
 
       - name: run the tests
         run: |
