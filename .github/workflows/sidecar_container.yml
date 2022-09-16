@@ -66,6 +66,7 @@ jobs:
           connection-string: "Server=localhost;Initial Catalog=test123;User ID=sa;Password=P@ssw0rd;"  # the local connection string
           path: './Tests/Tests.sqlproj' # the SQLproj file
           action: 'Publish'
+          arguments: '/p:IncludeCompositeObjects=True'
           # dacpac-package: './Tests/tsqlt/tSQLt.AzureSQL.dacpac'
 
       # - uses: azure/sql-action@v1.3
